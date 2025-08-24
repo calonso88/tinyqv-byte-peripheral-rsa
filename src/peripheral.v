@@ -104,11 +104,19 @@ module tqvp_alonso_rsa (
                     (address == 4'h7) ? encrypt_status :
                     8'h0;
 
-  // Temp assignments untill RSA core is instantiated
-  assign encrypt_status[0] = 1'b0;
-  assign encrypt_data = '0;
-
   // Assign unused inputs
   wire _unused = &{ui_in, 1'b0};
+
+  // Aux
+  wire ena_rsa, clear_rsa, eoc_rsa;
+
+  // RSA core controller
+  rsa_en_logic rsa_en_logic_i (.rstb(rst_n), .clk(clk), .ena(1'b1), .gpio_start(1'b0), .spi_start(cmd_reg[0]), .gpio_stop(1'b0), .spi_stop(cmd_reg[1]),
+                               .en_rsa(ena_rsa), .clear_rsa(clear_rsa), .eoc_rsa(eoc_rsa), .irq(encrypt_status[0]));
+
+  // RSA Instance
+  rsa_unit #(.WIDTH(8)) rsa_unit_i (.rstb(rst_n), .clk(clk), .ena(ena_rsa), .clear(clear_rsa),  .P(plain_text_reg), .E(private_key_exp_reg),
+                                            .M(private_key_mod_reg), .Const(montgomery_const_reg),
+                                            .eoc(eoc_rsa), .C(encrypt_data));
 
 endmodule

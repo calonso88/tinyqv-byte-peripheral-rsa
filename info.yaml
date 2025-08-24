@@ -24,7 +24,22 @@ project:
     - "test_harness/reclocking.sv"
     - "test_harness/spi_reg.sv"
     - "test_harness/synchronizer.sv"
-
+    - "rsa_core/full_adder.sv"
+    - "rsa_core/half_adder.sv"
+    - "rsa_core/mmm_unit.sv"
+    - "rsa_core/mux1_unit.sv"
+    - "rsa_core/mux2_unit.sv"
+    - "rsa_core/mux3_unit.sv"
+    - "rsa_core/processing_element_mux.sv"
+    - "rsa_core/processing_element_mux_right_border.sv"
+    - "rsa_core/register_crypt.sv"
+    - "rsa_core/ripple_carry_adder.sv"
+    - "rsa_core/rsa_control.sv"
+    - "rsa_core/rsa_en_logic.sv"
+    - "rsa_core/rsa_unit.sv"
+    - "rsa_core/shitreg1.sv"
+    - "rsa_core/shitreg2.sv"
+    - "rsa_core/shitreg3.sv"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
