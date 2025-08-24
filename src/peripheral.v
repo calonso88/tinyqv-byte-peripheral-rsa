@@ -26,29 +26,77 @@ module tqvp_alonso_rsa (
   output [7:0]  data_out      // Data out from the peripheral, set this in accordance with the supplied address
 );
 
-  // Example: Implement an 8-bit read/write register at address 0
-  reg [7:0] example_data;
+  // Address 0 - Test register - RW
+  reg [7:0] test_reg;
+  // Address 1 - Command register - RW - Start (Bit[0]) and Stop (Bit[1])
+  reg [7:0] cmd_reg;
+  // Address 2 - Plain Text register - RW
+  reg [7:0] plain_text_reg;
+  // Address 3 - Private key (Exponent) register - RW
+  reg [7:0] private_key_exp_reg;
+  // Address 4 - Private key (Modulus) register - RW
+  reg [7:0] private_key_mod_reg;
+  // Address 5 - Montgomery Constant register - RW
+  reg [7:0] montgomery_const_reg;
 
+  // Address 6 - Encrypted data registers - RO
+  wire [7:0] encrypt_data;
+  // Address 7 - Encryption machine status - R0 - Completed (Bit[0])
+  wire [7:0] encrypt_status;
+
+  // Implemente registers
   always @(posedge clk) begin
     if (!rst_n) begin
       example_data <= 0;
     end else begin
       if (address == 4'h0) begin
         if (data_write) begin
-          example_data <= data_in;
+          test_reg <= data_in;
+        end
+      end
+      if (address == 4'h1) begin
+        if (data_write) begin
+          cmd_reg <= data_in;
+        end
+      end
+      if (address == 4'h2) begin
+        if (data_write) begin
+          plain_text_reg <= data_in;
+        end
+      end
+      if (address == 4'h3) begin
+        if (data_write) begin
+          private_key_exp_reg <= data_in;
+        end
+      end
+      if (address == 4'h4) begin
+        if (data_write) begin
+          private_key_mod_reg <= data_in;
+        end
+      end
+      if (address == 4'h5) begin
+        if (data_write) begin
+          montgomery_const_reg <= data_in;
         end
       end
     end
   end
 
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + example_data;  // Example: uo_out is the sum of ui_in and the example register
+  // Tie low extra bits of encrypt_status
+  assign encrypt_status[7:1] = '0;
 
-  // Address 0 reads the example data register.
-  // Address 1 reads ui_in
-  // All other addresses read 0.
-  assign data_out = (address == 4'h0) ? example_data :
-                    (address == 4'h1) ? ui_in :
+  // Drive 7-seg Display with data from test register.
+  assign uo_out  = test_reg;
+
+  // Data out address muxes logic
+  assign data_out = (address == 4'h0) ? test_reg :
+                    (address == 4'h1) ? cmd_reg  :
+                    (address == 4'h2) ? plain_text_reg  :
+                    (address == 4'h3) ? private_key_exp_reg  :
+                    (address == 4'h4) ? private_key_mod_reg  :
+                    (address == 4'h5) ? montgomery_const_reg :
+                    (address == 4'h6) ? encrypt_data :
+                    (address == 4'h7) ? encrypt_status :
                     8'h0;
 
 endmodule
