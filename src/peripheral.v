@@ -104,6 +104,10 @@ module tqvp_alonso_rsa (
                     (address == 4'h7) ? encrypt_status :
                     8'h0;
 
+  // Temp assignments untill RSA core is instantiated
+  assign encrypt_status[0] = 1'b0;
+  assign encrypt_data = '0;
+
   // Assign unused inputs
   wire _unused = &{ui_in, 1'b0};
 
