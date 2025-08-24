@@ -47,7 +47,12 @@ module tqvp_alonso_rsa (
   // Implemente registers
   always @(posedge clk) begin
     if (!rst_n) begin
-      example_data <= 0;
+      test_reg <= 0;
+      cmd_reg  <= 0;
+      plain_text_reg <= 0;
+      private_key_exp_reg <= 0;
+      private_key_mod_reg <= 0;
+      montgomery_const_reg <= 0;
     end else begin
       if (address == 4'h0) begin
         if (data_write) begin
