@@ -37,9 +37,9 @@ project:
     - "rsa_core/rsa_control.sv"
     - "rsa_core/rsa_en_logic.sv"
     - "rsa_core/rsa_unit.sv"
-    - "rsa_core/shitreg1.sv"
-    - "rsa_core/shitreg2.sv"
-    - "rsa_core/shitreg3.sv"
+    - "rsa_core/shiftreg1.sv"
+    - "rsa_core/shiftreg2.sv"
+    - "rsa_core/shiftreg3.sv"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
