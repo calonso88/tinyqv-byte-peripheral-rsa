@@ -104,4 +104,7 @@ module tqvp_alonso_rsa (
                     (address == 4'h7) ? encrypt_status :
                     8'h0;
 
+  // Assign unused inputs
+  wire _unused = &{ui_in, 1'b0};
+
 endmodule
